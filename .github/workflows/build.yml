@@ -151,6 +151,7 @@ jobs:
           .\make_uwp_lua54.bat
           .\make_win32_lua53.bat
           .\make_win64_lua53.bat
+          .\make_win64_lua51.bat
           .\make_uwp.bat
       - uses: ilammy/msvc-dev-cmd@v1
       - name: Build Luajit
@@ -167,6 +168,11 @@ jobs:
         with:
           path: ./build/plugin_lua53/**/*
           name: plugin_lua53   
+      - name: Upload51
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./build/plugin_lua51/**/*
+          name: plugin_lua51   
       - name: UploadJit
         uses: actions/upload-artifact@v2
         with:
