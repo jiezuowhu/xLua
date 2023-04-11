@@ -106,11 +106,10 @@ else ()
 
     if(NOT LUA_VERSION STREQUAL "5.1.5")
         message("process uaconf.h.in")
+        configure_file ( ${LUA_SRC_PATH}/luaconf.h.in ${CMAKE_CURRENT_BINARY_DIR}/luaconf.h )
     else()
         message("no need process uaconf.h.in")
     endif()
-
-	configure_file ( ${LUA_SRC_PATH}/luaconf.h.in ${CMAKE_CURRENT_BINARY_DIR}/luaconf.h )
 
 	include_directories(
 	    ${CMAKE_SOURCE_DIR}
