@@ -157,7 +157,12 @@ set ( XLUA_CORE
 )
 
 if (NOT USING_LUAJIT)
-    list (APPEND XLUA_CORE memory_leak_checker.c)
+    if(NOT LUA_VERSION STREQUAL "5.1.5")
+        message("process memory_leak_checker.c")
+        list (APPEND XLUA_CORE memory_leak_checker.c)
+    else()
+        message("no need process memory_leak_checker.c")
+    endif()
 endif ( )
 
 macro(source_group_by_dir proj_dir source_files)
