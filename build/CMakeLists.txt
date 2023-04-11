@@ -24,6 +24,8 @@ option ( UINT_ESPECIALLY "using custom ulong" OFF )
 option ( USING_LUAJIT "using luajit" OFF )
 option ( GC64 "using gc64" OFF )
 option ( LUAC_COMPATIBLE_FORMAT "compatible format" OFF )
+option ( PB "using pb" OFF )
+option ( CJSON "using cjson" OFF )
 
 find_path(XLUA_PROJECT_DIR NAMES SConstruct
     PATHS 
@@ -39,6 +41,22 @@ endif()
 
 set(LUA_SRC_PATH lua-${LUA_VERSION}/src)
 set(LUAJIT_SRC_PATH luajit-2.1.0b3/src)
+
+if (PB)
+	#begin pb
+	set (LPB_SRC 
+		pb/pb.c
+	)
+	set_property(
+		SOURCE ${LPB_SRC}
+		APPEND
+		PROPERTY COMPILE_DEFINITIONS
+		LUA_LIB
+	)
+	list(APPEND THIRDPART_INC lua-protobuf)
+	set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
+	#end pb
+endif ()
 
 if (USING_LUAJIT)
 	
