@@ -53,9 +53,25 @@ if (PB)
 		PROPERTY COMPILE_DEFINITIONS
 		LUA_LIB
 	)
-	list(APPEND THIRDPART_INC lua-protobuf)
+	list(APPEND THIRDPART_INC pb)
 	set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
 	#end pb
+endif ()
+
+if (CJSON)
+	#begin cjson
+	set (LCJSON_SRC 
+		cjson/lua_cjson.c
+	)
+	set_property(
+		SOURCE ${LCJSON_SRC}
+		APPEND
+		PROPERTY COMPILE_DEFINITIONS
+		LUA_LIB
+	)
+	list(APPEND THIRDPART_INC cjson)
+	set (THIRDPART_SRC ${THIRDPART_SRC} ${LCJSON_SRC})
+	#end cjson
 endif ()
 
 if (USING_LUAJIT)
@@ -87,6 +103,12 @@ if (USING_LUAJIT)
 	set ( LUA_LIB )
 else ()
 	set ( LUA_IDSIZE 120 CACHE STRING "gives the maximum size for the description of the source." )
+
+    if(NOT LUA_VERSION STREQUAL "5.1.5")
+        message("process uaconf.h.in")
+    else()
+        message("no need process uaconf.h.in")
+    endif()
 
 	configure_file ( ${LUA_SRC_PATH}/luaconf.h.in ${CMAKE_CURRENT_BINARY_DIR}/luaconf.h )
 
