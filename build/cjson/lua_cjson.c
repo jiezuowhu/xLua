@@ -1296,7 +1296,7 @@ static int json_decode(lua_State *l)
 
 /* ===== INITIALISATION ===== */
 
-#if LUA_VERSION_NUM == 501
+#if LUA_VERSION_NUM == 501 && !USING_LUAJIT
 /* Compatibility for Lua 5.1.
  *
  * luaL_setfuncs() is used to create a module table where the functions have
