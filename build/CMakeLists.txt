@@ -26,7 +26,7 @@ option ( GC64 "using gc64" OFF )
 option ( LUAC_COMPATIBLE_FORMAT "compatible format" OFF )
 option ( LUA_COMPAT_5_1 "open compat" ON )
 option ( PB "using pb" ON )
-option ( CJSON "using cjson" OFF )
+option ( CJSON "using cjson" ON )
 option ( RAPIDJSON "using lua-rapidjson" OFF )
 option ( LPB "using pbc" OFF )
 option ( PBC "using pbc" OFF )
@@ -64,7 +64,7 @@ if (PB AND NOT LUA_VERSION STREQUAL "5.4.1")
 	#end pb
 endif ()
 
-if (CJSON)
+if (CJSON AND NOT LUA_VERSION STREQUAL "5.4.1")
 	#begin cjson
 	set (LCJSON_SRC 
 		cjson/lua_cjson.c
