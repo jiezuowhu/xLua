@@ -256,7 +256,7 @@ if (LUAC_COMPATIBLE_FORMAT AND NOT USING_LUAJIT)
 endif ()
 
 if (LUA_COMPAT_MODULE)
-    target_compile_definitions (xlua PRIVATE LUA_COMPAT_MODULE)
+    ADD_DEFINITIONS(-DLUA_COMPAT_MODULE)
 endif ()
 
 set_property(
