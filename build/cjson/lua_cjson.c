@@ -1296,7 +1296,9 @@ static int json_decode(lua_State *l)
 
 /* ===== INITIALISATION ===== */
 
-#if LUA_VERSION_NUM == 501 && !USING_LUAJIT
+#if LUA_VERSION_NUM == 501
+#if USING_LUAJIT
+#else
 /* Compatibility for Lua 5.1.
  *
  * luaL_setfuncs() is used to create a module table where the functions have
@@ -1314,6 +1316,7 @@ static void luaL_setfuncs (lua_State *l, const luaL_Reg *reg, int nup)
     }
     lua_pop(l, nup);  /* remove upvalues */
 }
+#endif
 #endif
 
 /* Call target function in protected mode with all supplied args.
