@@ -27,6 +27,11 @@ option ( LUAC_COMPATIBLE_FORMAT "compatible format" OFF )
 option ( LUA_COMPAT_5_1 "open compat" ON )
 option ( PB "using pb" ON )
 option ( CJSON "using cjson" OFF )
+option ( RAPIDJSON "using lua-rapidjson" OFF )
+option ( LPB "using pbc" OFF )
+option ( PBC "using pbc" OFF )
+option ( LPEG "using pbc" OFF )
+option ( FFI "using pbc" OFF )
 
 find_path(XLUA_PROJECT_DIR NAMES SConstruct
     PATHS 
@@ -73,6 +78,108 @@ if (CJSON)
 	list(APPEND THIRDPART_INC cjson)
 	set (THIRDPART_SRC ${THIRDPART_SRC} ${LCJSON_SRC})
 	#end cjson
+endif ()
+
+if (RAPIDJSON)
+    #begin lua-rapidjson
+    set (RAPIDJSON_SRC lua-rapidjson/source/rapidjson.cpp)
+    set_property(
+        SOURCE ${RAPIDJSON_SRC}
+        APPEND
+        PROPERTY COMPILE_DEFINITIONS
+        LUA_LIB
+    )
+    list(APPEND THIRDPART_INC  lua-rapidjson/include)
+    set (THIRDPART_SRC ${THIRDPART_SRC} ${RAPIDJSON_SRC})
+    #end lua-rapidjson
+endif ()
+
+if (LPB)
+	#begin lua-profobuf
+	set (LPB_SRC 
+		lua-protobuf/pb.c
+	)
+	set_property(
+		SOURCE ${LPB_SRC}
+		APPEND
+		PROPERTY COMPILE_DEFINITIONS
+		LUA_LIB
+	)
+	list(APPEND THIRDPART_INC lua-protobuf)
+	set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
+	#end lua-protobuf
+endif ()
+
+if (PBC)
+	#begin pbc
+	set (PBC_SRC 
+		pbc/src/alloc.c
+		pbc/src/array.c
+		pbc/src/array.c
+		pbc/src/bootstrap.c
+		pbc/src/context.c
+		pbc/src/decode.c
+		pbc/src/map.c
+		pbc/src/pattern.c
+		pbc/src/proto.c
+		pbc/src/register.c
+		pbc/src/rmessage.c
+		pbc/src/stringpool.c
+		pbc/src/varint.c
+		pbc/src/wmessage.c
+	)
+
+	if (USING_LUAJIT)
+		list(APPEND PBC_SRC pbc pbc/binding/lua/pbc-lua.c)
+	else ()
+		list(APPEND PBC_SRC pbc pbc/binding/lua53/pbc-lua53.c)
+	endif ()
+
+	set_property(
+		SOURCE ${PBC_SRC}
+		APPEND
+		PROPERTY COMPILE_DEFINITIONS
+		LUA_LIB
+	)
+	list(APPEND THIRDPART_INC pbc pbc/src)
+	set (THIRDPART_SRC ${THIRDPART_SRC} ${PBC_SRC})
+	#end pbc
+endif ()
+
+if (LPEG)
+    #begin lpeg
+    set ( LPEG_SRC
+        lpeg/lpcap.c
+        lpeg/lpcode.c
+        lpeg/lpprint.c
+        lpeg/lptree.c
+        lpeg/lpvm.c
+    )
+    set_property(
+        SOURCE ${LPEG_SRC}
+        APPEND
+        PROPERTY COMPILE_DEFINITIONS
+        LUA_LIB
+    )
+    list(APPEND THIRDPART_INC  lpeg)
+    set (THIRDPART_SRC ${THIRDPART_SRC} ${LPEG_SRC})
+    #end lpeg
+endif ()
+
+if (FFI)
+    #begin FFI
+    if (NOT USING_LUAJIT)
+        set (FFI_SRC ffi/parser.c ffi/ctype.c ffi/ffi.c)
+        set_property(
+            SOURCE ${FFI_SRC}
+            APPEND
+            PROPERTY COMPILE_DEFINITIONS
+            LUA_LIB
+        )
+        list(APPEND THIRDPART_INC  ffi)
+        set (THIRDPART_SRC ${THIRDPART_SRC} ${FFI_SRC})
+    endif ()
+    #end FFI
 endif ()
 
 if (USING_LUAJIT)
