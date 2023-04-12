@@ -24,7 +24,7 @@ option ( UINT_ESPECIALLY "using custom ulong" OFF )
 option ( USING_LUAJIT "using luajit" OFF )
 option ( GC64 "using gc64" OFF )
 option ( LUAC_COMPATIBLE_FORMAT "compatible format" OFF )
-option ( LUA_COMPAT_MODULE "open module functions" OFF )
+option ( LUA_COMPAT_5_1 "open compat" ON )
 option ( PB "using pb" OFF )
 option ( CJSON "using cjson" OFF )
 
@@ -255,8 +255,8 @@ if (LUAC_COMPATIBLE_FORMAT AND NOT USING_LUAJIT)
     target_compile_definitions (xlua PRIVATE LUAC_COMPATIBLE_FORMAT)
 endif ()
 
-if (LUA_COMPAT_MODULE)
-    ADD_DEFINITIONS(-DLUA_COMPAT_MODULE)
+if (LUA_COMPAT_5_1)
+    ADD_DEFINITIONS(-DLUA_COMPAT_5_1)
 endif ()
 
 set_property(
