@@ -79,6 +79,12 @@ if (CJSON AND NOT LUA_VERSION STREQUAL "5.4.1")
 	)
 	list(APPEND THIRDPART_INC cjson)
 	set (THIRDPART_SRC ${THIRDPART_SRC} ${LCJSON_SRC})
+    if (NOT USING_LUAJIT)
+        if(LUA_VERSION STREQUAL "5.1.5")
+            message("need luaL_setfuncs")
+            ADD_DEFINITIONS(-DCJSON_NEED_SETFUNCS)
+        endif()
+    endif ( )
 	#end cjson
 endif ()
 
