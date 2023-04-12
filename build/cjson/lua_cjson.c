@@ -75,6 +75,11 @@
 #define DEFAULT_DECODE_INVALID_NUMBERS 0
 #endif
 
+#ifdef _WIN32
+	#define strcasecmp _stricmp
+	#define strncasecmp _strnicmp
+#endif
+
 typedef enum {
     T_OBJ_BEGIN,
     T_OBJ_END,
@@ -1302,13 +1307,13 @@ static void luaL_setfuncs (lua_State *l, const luaL_Reg *reg, int nup)
     int i;
 
     luaL_checkstack(l, nup, "too many upvalues");
-    for (; reg->name != NULL; reg++) {  
-        for (i = 0; i < nup; i++)  
+    for (; reg->name != NULL; reg++) {  /* fill the table with given functions */
+        for (i = 0; i < nup; i++)  /* copy upvalues to the top */
             lua_pushvalue(l, -nup);
-        lua_pushcclosure(l, reg->func, nup);  
+        lua_pushcclosure(l, reg->func, nup);  /* closure with those upvalues */
         lua_setfield(l, -(nup + 2), reg->name);
     }
-    lua_pop(l, nup);  
+    lua_pop(l, nup);  /* remove upvalues */
 }
 #endif
 
