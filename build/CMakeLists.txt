@@ -50,17 +50,17 @@ set(LUAJIT_SRC_PATH luajit-2.1.0b3/src)
 
 if (PB)
 	#begin pb
-	set (LPB_SRC 
+	set (PB_SRC 
 		pb/pb.c
 	)
 	set_property(
-		SOURCE ${LPB_SRC}
+		SOURCE ${PB_SRC}
 		APPEND
 		PROPERTY COMPILE_DEFINITIONS
 		LUA_LIB
 	)
 	list(APPEND THIRDPART_INC pb)
-	set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
+	set (THIRDPART_SRC ${THIRDPART_SRC} ${PB_SRC})
 	#end pb
 endif ()
 
