@@ -48,7 +48,7 @@ endif()
 set(LUA_SRC_PATH lua-${LUA_VERSION}/src)
 set(LUAJIT_SRC_PATH luajit-2.1.0b3/src)
 
-if (PB)
+if (PB AND NOT LUA_VERSION STREQUAL "5.4.1")
 	#begin pb
 	set (PB_SRC 
 		pb/pb.c
