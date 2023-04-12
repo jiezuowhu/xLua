@@ -67,6 +67,8 @@ endif ()
 if (CJSON AND NOT LUA_VERSION STREQUAL "5.4.1")
 	#begin cjson
 	set (LCJSON_SRC 
+		cjson/fpconv.c
+		cjson/strbuf.c
 		cjson/lua_cjson.c
 	)
 	set_property(
