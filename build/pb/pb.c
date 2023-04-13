@@ -29,7 +29,7 @@
 #include <lualib.h>
 #include <lauxlib.h>
 
-#if CMAKE_SYSTEM_NAME == WindowsStore
+#if defined(_WIN32) || defined(_MSC_VER)
 #define sprintf sprintf_s
 #endif
 
