@@ -84,7 +84,7 @@ if (CJSON AND NOT LUA_VERSION STREQUAL "5.4.1")
             message("need luaL_setfuncs")
             ADD_DEFINITIONS(-DCJSON_NEED_SETFUNCS)
         endif()
-    else
+    else ()
         if (APPLE AND NOT IOS)
             message("need luaL_setfuncs in macjit")
             ADD_DEFINITIONS(-DCJSON_NEED_SETFUNCS)
