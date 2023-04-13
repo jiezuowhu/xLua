@@ -29,6 +29,17 @@
 #include <lualib.h>
 #include <lauxlib.h>
 
+/*
+** Windows stuff
+*/
+#if defined(_WIN32) 	/* { */
+
+#if !defined(_CRT_SECURE_NO_WARNINGS)
+#define _CRT_SECURE_NO_WARNINGS  /* avoid warnings about ISO C functions */
+#endif
+
+#endif			/* } */
+
 #ifdef _WIN32
 #define PACKED_DECL 
 #pragma pack(1)
