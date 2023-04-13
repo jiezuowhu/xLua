@@ -29,16 +29,9 @@
 #include <lualib.h>
 #include <lauxlib.h>
 
-/*
-** Windows stuff
-*/
-#if defined(_WIN32) || defined(_MSC_VER) 	/* { */
-
-#if !defined(_CRT_SECURE_NO_WARNINGS)
-#define _CRT_SECURE_NO_WARNINGS  /* avoid warnings about ISO C functions */
+#if CMAKE_SYSTEM_NAME == WindowsStore
+#define sprintf sprintf_s
 #endif
-
-#endif			/* } */
 
 #ifdef _WIN32
 #define PACKED_DECL 
