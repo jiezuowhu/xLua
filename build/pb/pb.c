@@ -29,17 +29,6 @@
 #include <lualib.h>
 #include <lauxlib.h>
 
-/*
-** Windows stuff
-*/
-//#if defined(_WIN32) || defined(_MSC_VER) 	/* { */
-
-#if !defined(_CRT_SECURE_NO_WARNINGS)
-#define _CRT_SECURE_NO_WARNINGS  /* avoid warnings about ISO C functions */
-#endif
-
-//#endif			/* } */
-
 #ifdef _WIN32
 #define PACKED_DECL 
 #pragma pack(1)
@@ -440,7 +429,7 @@ static int varint_decoder64(lua_State *L)
     else
     {
         char buf[64];
-        sprintf(buf, "%" PRIu64, unpack_varint(buffer, len));
+        sprintf_s(buf, "%" PRIu64, unpack_varint(buffer, len));
         lua_pushstring(L, buf);
         lua_pushinteger(L, len + pos);
     }
@@ -482,7 +471,7 @@ static int signed_varint_decoder64(lua_State *L)
     else
     {
         char buf[64];
-        sprintf(buf, "%" PRId64, (int64_t)unpack_varint(buffer, len));
+        sprintf_s(buf, "%" PRId64, (int64_t)unpack_varint(buffer, len));
         lua_pushstring(L, buf);
         lua_pushinteger(L, len + pos);
     }
@@ -521,7 +510,7 @@ static int zig_zag_encode64(lua_State *L)
     else 
     {
       char temp[64];
-      sprintf(temp, "%" PRIu64, value);
+      sprintf_s(temp, "%" PRIu64, value);
       lua_pushstring(L, temp);
       return 1;
     }
@@ -540,7 +529,7 @@ static int zig_zag_decode64(lua_State *L)
     else 
     {
         char temp[64];
-        sprintf(temp, "%" PRId64, value);
+        sprintf_s(temp, "%" PRId64, value);
         lua_pushstring(L, temp);
         return 1;
     }    
@@ -607,7 +596,7 @@ static int struct_unpack(lua_State *L)
             {
                 char temp[64];
                 int64_t n = __ld64(unpack_fixed64(buffer, out));
-                sprintf(temp, "%" PRId64, n);    
+                sprintf_s(temp, "%" PRId64, n);    
                 lua_pushstring(L, temp);                                               
                 break;
             }
@@ -630,7 +619,7 @@ static int struct_unpack(lua_State *L)
             {                
                 char temp[64];
                 uint64_t n = __uld64(unpack_fixed64(buffer, out));
-                sprintf(temp, "%" PRIu64, n);    
+                sprintf_s(temp, "%" PRIu64, n);    
                 lua_pushstring(L, temp);                                    
                 break;
             }
