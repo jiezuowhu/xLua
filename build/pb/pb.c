@@ -32,7 +32,7 @@
 /*
 ** Windows stuff
 */
-#if defined(_WIN32) 	/* { */
+#if defined(_WIN32) || defined(_MSC_VER) 	/* { */
 
 #if !defined(_CRT_SECURE_NO_WARNINGS)
 #define _CRT_SECURE_NO_WARNINGS  /* avoid warnings about ISO C functions */
